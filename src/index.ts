@@ -225,7 +225,11 @@ function renderDO2Table(data: string, interval: Interval): string {
                 <tr>
                     <th>センサID</th>
                     <th>日時</th>
-                    <th>値（調整中です！）</th>
+                    <th>バッテリ電圧</th>
+                    <th>外気温</th>
+                    <th>水温</th>
+                    <th>DO(%)</th>
+                    <th>DO(mg/L)</th>
                 </tr>
             </thead>
             <tbody>
@@ -242,8 +246,12 @@ function renderDO2Table(data: string, interval: Interval): string {
             <tr>
                 <td>${row[0]}</td>
                 <td>${jst}</td>
-                <td>${row[2]}</td>
-                </tr>
+                <td>${row[2]} V</td>
+                <td>${row[3]} ℃</td>
+                <td>${row[4]} ℃</td>
+                <td>${row[5]} %</td>
+                <td>${row[6]} mg/L</td>
+            </tr>
         `;
     });
 
@@ -254,6 +262,7 @@ function renderDO2Table(data: string, interval: Interval): string {
 
     return tableHtml;
 }
+
 //追加
 function renderDO3Table(data: string, interval: Interval): string {
     const rows = prepareRows(data, interval);
@@ -360,7 +369,8 @@ const chartIntervalButton = document.getElementById("chart-interval-button");
 // グラフ用ボタンは、グラフ表示中、かつ塩分・DO1号・DO3号のときだけ表示
 function updateChartIntervalVisibility() {
     if (!chartIntervalButton) return;
-    const hasInterval = ["salinity", "do1", "do3"].includes(currentSensorType);
+    // "do2" を配列に追加
+    const hasInterval = ["salinity", "do1", "do2", "do3"].includes(currentSensorType);
     chartIntervalButton.style.display = isChartVisible && hasInterval ? "" : "none";
 }
 
@@ -482,12 +492,6 @@ async function loadChart(
     sensorType: string
 ) {
     if (!chartContainer) return;
-
-    // DO2はグラフがないので、取得せずにメッセージだけ出す
-    if (sensorType === "do2") {
-        chartContainer.textContent = "DO2号のグラフは準備中です。";
-        return;
-    }
 
     const data = await fetchData(apiUrl);
     if (!data) return;

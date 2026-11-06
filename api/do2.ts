@@ -6,7 +6,7 @@ export default async function handler(
   response: any // NextApiResponse に変更推奨
 ) {
   // 1. 関数内で環境変数を読み込む（サーバーレス環境でのベストプラクティス）
-  const targetUrl: string | undefined = process.env.DO1_API_URL;
+  const targetUrl: string | undefined = process.env.DO2_API_URL;
 
   if (!targetUrl) {
     return response.status(500).json({ error: "API URLが設定されていません。" });

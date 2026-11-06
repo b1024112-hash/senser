@@ -225,8 +225,8 @@ function renderDO2Table(data: string, interval: Interval): string {
                 <tr>
                     <th>センサID</th>
                     <th>日時</th>
-                    <th>バッテリ電圧</th>
-                    <th>外気温</th>
+                    <th>緯度</th>
+                    <th>経度</th>
                     <th>水温</th>
                     <th>DO(%)</th>
                     <th>DO(mg/L)</th>
@@ -246,8 +246,8 @@ function renderDO2Table(data: string, interval: Interval): string {
             <tr>
                 <td>${row[0]}</td>
                 <td>${jst}</td>
-                <td>${row[2]} V</td>
-                <td>${row[3]} ℃</td>
+                <td>${row[2]} °</td>
+                <td>${row[3]} °</td>
                 <td>${row[4]} ℃</td>
                 <td>${row[5]} %</td>
                 <td>${row[6]} mg/L</td>
